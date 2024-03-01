@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs search algorithm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="primary-bg flex jcc">
+        <img src="assets/head-hunter-logo.png" width="125" alt="head-hunter-logo" />
+    </header>
+    <main class="flex col gap-m">
+        <section id="searchFilter">
+            <div class="container flex col aic gap-s">
+                <h1>Find the <span class="primary">job</span> of your <span class="primary">dreams</span></h1>
+                <div class="flex mb-col jcsb aife gap-m">
+                    <div class="flex col gap-xxs">
+                        <label for="jobTitle">Search by Job title:</label>
+                        <input type="text" name="jobTitle" id="jobTitle">
+                    </div>
+                    <div class="flex col gap-xxs">
+                        <label for="jobLocation">Search by Location:</label>
+                        <input type="text" name="jobLocation" id="jobLocation">
+                    </div>
+                    <button id="searchButton" class="primary-bg"><i class="fa-solid fa-search"></i> Search</button>
+                </div>
+                <div id="errorMessage"></div>
+            </div>
+        </section>
+        <section>
+            <div class="container flex col aic gap-m">
+                <div class="flex mb-col aife jcsb gap-xs">
+                    <h2>Job search results:</h2>
+                    <div id="jobCounter"></div>
+                </div>
+                <div class="divider"></div>
+                <div class="flex jcsb aic gap-xxs">
+                    <span>Show results as:</span>
+                    <div class="flex gap-xxs">
+                        <button id="orderAsList" class="controller flex aic gap-xxs active"><i class="fa-solid fa-list-ul"></i><span>List</span></button>
+                        <button id="orderAsGrid" class="controller flex aic gap-xxs"><i class="fa-solid fa-grip"></i><span>Grid</span></button>
+                    </div>
+                </div>
+                <div id="resultImg" class="results-img"></div>
+                <ul id="resultsList" class="flex col wrap gap-s"></ul>
+            </div>
+        </section>
+    </main>
+    <footer class="primary-bg flex jcc">
+        <strong>Jobs search algorithm by Head Hunter</strong>
+    </footer>
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/5dbe9b0a5f.js" crossorigin="anonymous"></script>
+</body>
+</html>
