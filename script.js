@@ -137,7 +137,7 @@ const searchFilter = document.getElementById("searchFilter");
 const resultImg = document.getElementById("resultImg");
 const resultsList = document.getElementById("resultsList");
 
-// Inizializzo oggetto con conteggio degli annunci e array risultati 
+// Inizializzo oggetto con conteggio e array risultati annunci
 let jobsResearch = {
   count: 0,
   result: []
@@ -145,51 +145,84 @@ let jobsResearch = {
 
 /* --------- FUNCTIONS --------- */
 
-// Funzione per cercare e aggiornare i risultati
+// Funzione di ricerca annunci
 function searchJobs(title, location) {
-  
-  // Pulisco l'area dei risultati per la prossima ricerca
-  resultsList.innerHTML = '';
 
   // Trasformo in lower case i value inseriti dall'utente
   let jobTitleValue = title.toLowerCase();
   let jobLocationValue = location.toLowerCase();
 
-  // Controllo se i caratteri inseriti dall'utente < 2 esco dalla funzione di ricerca ritornando un errore
+  // Controllo se i caratteri inseriti dall'utente > 2 altrimenti esco dalla funzione di ricerca ritornando un errore
   if (jobTitleValue.length < 2 && jobLocationValue.length < 2) {
     jobTitleInput.classList.add("error");
     jobLocationInput.classList.add("error");
     errorMessage.textContent = "Please enter at least 2 characters to start a search.";
+
     return;
   }
 
-  // Ciclo sull'array jobs
-  jobs.forEach(job => {
+  // Resetto l'html della lista degli annunci per la prossima ricerca
+  resultsList.innerHTML = '';
 
-    // Trasformo in lower case i valori dell'array
-    let title = job.title.toLowerCase();
-    let location = job.location.toLowerCase();
+  // Resetto jobsResearch per la prossima ricerca
+  jobsResearch = {
+    count: 0,
+    result: []
+  };
+
+  // Booleano di controllo per verificare che ci siano annunci
+  let foundResults = false;
+
+  // Ciclo sull'array jobs
+  for (let i = 0; i < jobs.length; i++) {
+
+    // Trasformo in lower case i valori dell'array jobs
+    let title = jobs[i].title.toLowerCase();
+    let location = jobs[i].location.toLowerCase();
 
     // Controllo se i valori dell'array sono inclusi nei valori inseriti dall'utente
     if (title.includes(jobTitleValue) && location.includes(jobLocationValue)) {
       
-      // Push oggetto job nell'array userResearch
-      jobsResearch.result.push(job)
+      // Pusho l'oggetto job nell'array jobsResearch
+      jobsResearch.result.push(jobs[i])
 
-      // Aggiorna il conteggio degli annunci
-      jobsResearch.count += 1;
+      // Aggiorno il conteggio degli annunci
+      jobsResearch.count++;
 
-      // Parte la funzione per creare le card
-      createJobCard(job);
+      // Parte la funzione che crea le card con gli annunci
+      createJobCard(jobs[i]);
 
       // Parte la funzione che conteggia gli annunci
       updateCounter(jobsResearch.count);
-      console.log("pippo", jobsResearch.count);
 
-    } else {
-      updateCounter(0);
+      // Aggiorno il booleano di controllo a true se trovo annunci
+      foundResults = true;
     }
-  });
+  }
+  
+  // Se non trovo annunci lancio la funzione di conteggio con 0 annunci
+  if (!foundResults) {
+    updateCounter(0);
+  }
+
+  // Check per capire quale layout utilizzare
+  if (orderAsGrid.classList.contains("active")) {
+    cardsLayout(true);
+  } else {
+    cardsLayout(false);
+  }
+}
+
+// Funzione per la gestione del layout delle cards
+function cardsLayout(isGrid) {
+  let cards = document.getElementsByClassName("card");
+  for (let i = 0; i < cards.length; i++) {
+    if (isGrid) {
+      cards[i].classList.add("grid");
+    } else {
+      cards[i].classList.remove("grid");
+    }
+  }
 }
 
 // Funzione per ripulire gli errori su input e rimuovere il messaggio d'errore
@@ -239,18 +272,6 @@ function updateCounter(n) {
   jobCounter.appendChild(h4);
 }
 
-// Funzione per visualizzazione layout cards
-function cardsLayout(isGrid) {
-  let cards = document.getElementsByClassName("card");
-  for (let i = 0; i < cards.length; i++) {
-    if (isGrid) {
-      cards[i].classList.add("grid");
-    } else {
-      cards[i].classList.remove("grid");
-    }
-  }
-}
-
 /* --------- EVENT LISTENER --------- */
 
 // Event listener per iniziare una ricerca di annunci di lavoro
@@ -261,12 +282,6 @@ btn.addEventListener("click", function() {
 
   // Console log dell'oggetto jobsResearch
   console.log(jobsResearch);
-
-  // Resetta jobsResearch prima di una nuova ricerca
-  jobsResearch = {
-    count: 0,
-    result: []
-  };
 });
 
 // Event listener per impostare il layout delle card a lista
@@ -286,10 +301,5 @@ orderAsGrid.addEventListener("click", function() {
 });
 
 // Event listener che lancia la funzione di rimozione degli errori
-jobTitleInput.addEventListener("focus", function() {
-  clearError();
-});
-
-jobLocationInput.addEventListener("focus", function() {
-  clearError();
-});
+jobTitleInput.addEventListener("focus", clearError)
+jobLocationInput.addEventListener("focus", clearError)

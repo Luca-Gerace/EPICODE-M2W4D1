@@ -14,38 +14,45 @@
         <img src="assets/head-hunter-logo.png" width="125" alt="head-hunter-logo" />
     </header>
     <main class="flex col gap-m">
+        <!-- Search filter section -->
         <section id="searchFilter">
             <div class="container flex col aic gap-s">
                 <h1>Find the <span class="primary">job</span> of your <span class="primary">dreams</span></h1>
                 <div class="flex mb-col jcsb aife gap-m">
                     <div class="flex col gap-xxs">
                         <label for="jobTitle">Search by Job title:</label>
-                        <input type="text" name="jobTitle" id="jobTitle">
+                        <input type="text" id="jobTitle">
                     </div>
                     <div class="flex col gap-xxs">
                         <label for="jobLocation">Search by Location:</label>
-                        <input type="text" name="jobLocation" id="jobLocation">
+                        <input type="text" id="jobLocation">
                     </div>
-                    <button id="searchButton" class="primary-bg"><i class="fa-solid fa-search"></i> Search</button>
+                    <button id="searchButton" class="btn btn-primary"><i class="fa-solid fa-search"></i> Search</button>
                 </div>
+                <!-- Error message div -->
                 <div id="errorMessage"></div>
             </div>
         </section>
+        <!-- Search results section -->
         <section>
             <div class="container flex col aic gap-m">
                 <div class="flex mb-col aife jcsb gap-xs">
                     <h2>Job search results:</h2>
+                    <!-- Results counter div -->
                     <div id="jobCounter"></div>
                 </div>
                 <div class="divider"></div>
+                <!-- Show results as list/grid -->
                 <div class="flex jcsb aic gap-xxs">
                     <span>Show results as:</span>
                     <div class="flex gap-xxs">
-                        <button id="orderAsList" class="controller flex aic gap-xxs active"><i class="fa-solid fa-list-ul"></i><span>List</span></button>
-                        <button id="orderAsGrid" class="controller flex aic gap-xxs"><i class="fa-solid fa-grip"></i><span>Grid</span></button>
+                        <button id="orderAsList" class="btn btn-secondary flex aic gap-xxs active"><i class="fa-solid fa-list-ul"></i><span>List</span></button>
+                        <button id="orderAsGrid" class="btn btn-secondary flex aic gap-xxs"><i class="fa-solid fa-grip-vertical"></i><span>Grid</span></button>
                     </div>
                 </div>
+                <!-- Results illustration div -->
                 <div id="resultImg" class="results-img"></div>
+                <!-- Results container -->
                 <ul id="resultsList" class="flex col wrap gap-s"></ul>
             </div>
         </section>
